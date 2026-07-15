@@ -33,7 +33,7 @@ dependency-reduced-pom.xml
 
 logs/
 *.log
-
+src/main/resources/application.yml
 spring.log
 
 ####################################################
