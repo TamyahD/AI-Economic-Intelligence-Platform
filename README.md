@@ -81,7 +81,7 @@ or
 - [x] Create project structure
 - [ ] Create JPA entities
 - [ ] Implement repositories
-- [ ] Build service layer
+- [ ] Build com.td.aieconomics.service layer
 - [ ] Develop REST controllers
 - [ ] Integrate AI summarization
 - [ ] Containerize with Docker
