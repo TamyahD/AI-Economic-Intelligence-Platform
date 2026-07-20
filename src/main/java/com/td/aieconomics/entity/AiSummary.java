@@ -45,10 +45,7 @@ public class AiSummary {
     private AiSummaryStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "economic_indicator_id",
-            nullable = false
-    )
+    @JoinColumn(name = "economic_indicator_id", nullable = false)
     private EconomicIndicator economicIndicator;
 
     public AiSummary() {
