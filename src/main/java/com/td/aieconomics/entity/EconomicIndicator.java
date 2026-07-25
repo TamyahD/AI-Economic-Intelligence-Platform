@@ -1,14 +1,7 @@
 package com.td.aieconomics.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,26 +18,32 @@ public class EconomicIndicator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 150)
     private String name;
 
     @Column(nullable = false, length = 100)
     private String country;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String category;
 
     @Column(nullable = false, precision = 18, scale = 4)
     private BigDecimal value;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     private String unit;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 255)
     private String source;
 
-    @Column(nullable = false)
+    @Column(name = "date_collected")
     private LocalDate dateCollected;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @OneToMany(
             mappedBy = "economicIndicator",
@@ -56,9 +55,20 @@ public class EconomicIndicator {
     )
     private List<AiSummary> aiSummaries = new ArrayList<>();
 
-    private LocalDateTime createdAt;
+    public EconomicIndicator() {
+    }
 
-    private LocalDateTime updatedAt;
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        createdAt = now;
+        updatedAt = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -128,16 +138,8 @@ public class EconomicIndicator {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public List<AiSummary> getAiSummaries() {
@@ -148,13 +150,13 @@ public class EconomicIndicator {
         this.aiSummaries = aiSummaries;
     }
 
-    public void addSummary(AiSummary summary) {
-        aiSummaries.add(summary);
-        summary.setEconomicIndicator(this);
+    public void addAiSummary(AiSummary aiSummary) {
+        aiSummaries.add(aiSummary);
+        aiSummary.setEconomicIndicator(this);
     }
 
-    public void removeSummary(AiSummary summary) {
-        aiSummaries.remove(summary);
-        summary.setEconomicIndicator(null);
+    public void removeAiSummary(AiSummary aiSummary) {
+        aiSummaries.remove(aiSummary);
+        aiSummary.setEconomicIndicator(null);
     }
 }

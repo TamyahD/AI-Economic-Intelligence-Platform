@@ -25,23 +25,11 @@ public class EconomicPromptServiceImpl implements EconomicPromptService {
                                 
                 """);
 
-        prompt.append("Name: ")
-                .append(indicator.getName())
-                .append("\n");
-
-        prompt.append("Category: ")
-                .append(indicator.getCategory())
-                .append("\n");
-
-        prompt.append("Current Value: ")
-                .append(indicator.getCurrentValue())
-                .append("\n");
-
-        prompt.append("Date: ")
-                .append(indicator.getReleaseDate());
+        prompt.append("Name: ").append(indicator.getName()).append("\n");
+        prompt.append("Category: ").append(indicator.getCategory()).append("\n");
+        prompt.append("Current Value: ").append(indicator.getValue()).append("\n");
+        prompt.append("Date: ").append(indicator.getDateCollected());
 
         return prompt.toString();
-
     }
-
 }
