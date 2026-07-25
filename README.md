@@ -38,20 +38,79 @@ A cloud-native AI-powered economic intelligence platform built with **Java**, **
 ## Current Progress
 
 ```
-                Spring Boot Application
-                          │
-                    Spring Data JPA
-                          │
-                       Hibernate
-                          │
-                      JDBC Driver
-                          │
-                          ▼
-                       PostgreSQL
-                          │
-                          ▼
-              Database: economic_platform
+                                     +----------------------+
+                                     |   Spring Boot App    |
+                                     +----------+-----------+
+                                                |
+                                                v
+                                    +-------------------------+
+                                    | REST Controllers        |
+                                    +-----------+-------------+
+                                                |
+                                                v
+                               +------------------------------------+
+                               | EconomicAnalysisService            |
+                               | (AI Workflow Orchestration)        |
+                               +------+----------------------+-------+
+                                      |                      |
+                                      |                      |
+                         +------------v----+        +--------v----------------+
+                         | EconomicPrompt  |        | Spring AI ChatClient    |
+                         | Service         |        |                         |
+                         +------------+----+        +------------+------------+
+                                      |                          |
+                                      +------------+-------------+
+                                                   |
+                                                   v
+                                          +------------------+
+                                          | Ollama / Mistral |
+                                          +--------+---------+
+                                                   |
+                                                   v
+                                     +-------------------------------+
+                                     | AiGenerationContext           |
+                                     | (Runtime AI Generation State) |
+                                     +---------------+---------------+
+                                                     |
+                                                     v
+                                  +--------------------------------------+
+                                  | AiSummaryPersistenceService          |
+                                  +------------------+-------------------+
+                                                     |
+                                                     v
+                                         +-------------------------+
+                                         | AiSummaryRepository     |
+                                         +-----------+-------------+
+                                                     |
+                                                     |
+                         +---------------------------+---------------------------+
+                         |                                                       |
+                         v                                                       v
+              +-------------------------+                           +-------------------------+
+              | EconomicIndicator       |<------------------------->| AiSummary               |
+              | (Master Data)           |      One-to-Many          | (AI Knowledge)          |
+              +-------------------------+                           +-------------------------+
+                                                     |
+                                                     v
+                                         +-------------------------+
+                                         | PostgreSQL              |
+                                         | Schema:                 |
+                                         | economic_intelligence   |
+                                         +-------------------------+
 
+Development Profile Only
+------------------------
+
+ApplicationVerificationRunner
+          |
+          v
+Verifies:
+• EconomicIndicator availability
+• Prompt generation
+• Mistral connectivity
+• AI summary persistence
+• Entity relationships
+• End-to-end workflow
 ```
 
 ## Running the Project
@@ -61,6 +120,7 @@ A cloud-native AI-powered economic intelligence platform built with **Java**, **
 - Java 17+
 - Maven
 - PostgreSQL
+- Ollama/Mistral
 
 ### Start the application
 
@@ -79,9 +139,9 @@ or
 - [x] Initialize Spring Boot project
 - [x] Configure PostgreSQL datasource
 - [x] Create project structure
-- [ ] Create JPA entities
-- [ ] Implement repositories
-- [ ] Build com.td.aieconomics.service layer
+- [x] Create JPA entities
+- [x] Implement repositories
+- [x] Build com.td.aieconomics.service layer
 - [ ] Develop REST controllers
 - [ ] Integrate AI summarization
 - [ ] Containerize with Docker
